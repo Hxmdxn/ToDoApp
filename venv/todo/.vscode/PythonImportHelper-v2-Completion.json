@@ -41,6 +41,30 @@
         "documentation": {}
     },
     {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -57,11 +81,11 @@
         "documentation": {}
     },
     {
-        "label": "AppConfig",
-        "importPath": "django.apps",
-        "description": "django.apps",
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
         "isExtraImport": true,
-        "detail": "django.apps",
+        "detail": "django.db",
         "documentation": {}
     },
     {
@@ -70,6 +94,22 @@
         "description": "django.db",
         "isExtraImport": true,
         "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
         "documentation": {}
     },
     {
@@ -86,6 +126,14 @@
         "description": "django.shortcuts",
         "isExtraImport": true,
         "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
         "documentation": {}
     },
     {
@@ -138,7 +186,7 @@
         "kind": 5,
         "importPath": "todo.settings",
         "description": "todo.settings",
-        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n]",
+        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'todoApp'",
         "detail": "todo.settings",
         "documentation": {}
     },
@@ -147,7 +195,7 @@
         "kind": 5,
         "importPath": "todo.settings",
         "description": "todo.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n]\nMIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'todoApp'\n]\nMIDDLEWARE = [",
         "detail": "todo.settings",
         "documentation": {}
     },
@@ -264,7 +312,7 @@
         "kind": 5,
         "importPath": "todo.urls",
         "description": "todo.urls",
-        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('',include('todoApp.urls')),\n]",
         "detail": "todo.urls",
         "documentation": {}
     },
@@ -278,12 +326,48 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "todoApp.migrations.0001_initial",
+        "description": "todoApp.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = []\n    operations = [\n        migrations.CreateModel(\n            name=\"Task\",\n            fields=[\n                (\n                    \"id\",\n                    models.BigAutoField(",
+        "detail": "todoApp.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
         "label": "TodoappConfig",
         "kind": 6,
         "importPath": "todoApp.apps",
         "description": "todoApp.apps",
         "peekOfCode": "class TodoappConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'todoApp'",
         "detail": "todoApp.apps",
+        "documentation": {}
+    },
+    {
+        "label": "Task",
+        "kind": 6,
+        "importPath": "todoApp.models",
+        "description": "todoApp.models",
+        "peekOfCode": "class Task(models.Model):\n    title=models.CharField(max_length=200)\n    complete=models.BooleanField(default=False)\n    created=models.DateTimeField(auto_now_add=True)\n    def __str__ (self):\n        return self.title",
+        "detail": "todoApp.models",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "todoApp.urls",
+        "description": "todoApp.urls",
+        "peekOfCode": "urlpatterns = [\n    path('',views.list,name=\"tasks/list\"),\n]",
+        "detail": "todoApp.urls",
+        "documentation": {}
+    },
+    {
+        "label": "list",
+        "kind": 2,
+        "importPath": "todoApp.views",
+        "description": "todoApp.views",
+        "peekOfCode": "def list(request):\n    return render(request,\"tasks/list.html\")",
+        "detail": "todoApp.views",
         "documentation": {}
     },
     {

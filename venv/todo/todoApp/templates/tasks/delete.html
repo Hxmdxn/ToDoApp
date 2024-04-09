@@ -20,7 +20,7 @@
             margin-bottom: 20px;
         }
 
-        input[type="text"] {
+        input[type="text"], input[type="submit"] {
             padding: 8px;
             width: 250px;
             border-radius: 5px;
@@ -28,28 +28,26 @@
         }
 
         input[type="submit"] {
-            padding: 8px 20px;
             background-color: #4caf50;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
         }
 
-        .task {
+         .delete-section {
             background-color: #fff;
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
         }
 
-        .task a {
+       .delete-section a {
             margin-right: 10px;
             text-decoration: none;
             color: #333;
         }
 
-        .task a:hover {
+         .delete-section a:hover {
             text-decoration: underline;
         }
 
@@ -57,27 +55,21 @@
             text-decoration: line-through;
             color: #888;
         }
+
+        .delete-confirm {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h3>To Do</h3>
-    <form method="post" action="/">
-        {% csrf_token %}
-        {{ form.title }}
-        <input type="submit" name="Create Task">
-    </form>
+    <div class="delete-section">
+        <p>Are you sure you want to delete? "{{ item }}"</p>
+        <a href="{% url 'list' %}">Cancel</a>
 
-    {% for task in tasks %}
-    <div class="task">
-        <a href="{% url 'update' task.id %}">Update</a>
-        <a href="{% url 'delete' task.id %}">Delete</a>
-
-        {% if task.complete %}
-        <span class="completed">{{ task }}</span>
-        {% else %}
-        <span>{{ task }}</span>
-        {% endif %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="submit" value="Confirm">
+        </form>
     </div>
-    {% endfor %}
 </body>
 </html>

@@ -113,6 +113,22 @@
         "documentation": {}
     },
     {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "ModelForm",
+        "importPath": "django.forms",
+        "description": "django.forms",
+        "isExtraImport": true,
+        "detail": "django.forms",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -122,6 +138,14 @@
     },
     {
         "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
@@ -231,7 +255,7 @@
         "kind": 5,
         "importPath": "todo.settings",
         "description": "todo.settings",
-        "peekOfCode": "WSGI_APPLICATION = 'todo.wsgi.application'\n# Database\n# https://docs.djangoproject.com/en/5.0/ref/settings/#databases\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.sqlite3',\n        'NAME': BASE_DIR / 'db.sqlite3',\n    }\n}\n# Password validation",
+        "peekOfCode": "WSGI_APPLICATION = 'todo.wsgi.application'\n# Database\n# https://docs.djangoproject.com/en/5.0/ref/settings/#databases\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.mysql',\n        \"NAME\": \"todo\",\n        \"USER\":'root',\n        'PASSWORD':'iisj123',\n        'HOST':'localhost',",
         "detail": "todo.settings",
         "documentation": {}
     },
@@ -240,7 +264,7 @@
         "kind": 5,
         "importPath": "todo.settings",
         "description": "todo.settings",
-        "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.sqlite3',\n        'NAME': BASE_DIR / 'db.sqlite3',\n    }\n}\n# Password validation\n# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators\nAUTH_PASSWORD_VALIDATORS = [\n    {",
+        "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.mysql',\n        \"NAME\": \"todo\",\n        \"USER\":'root',\n        'PASSWORD':'iisj123',\n        'HOST':'localhost',\n        'PORT':3306,\n    }\n    }",
         "detail": "todo.settings",
         "documentation": {}
     },
@@ -344,6 +368,15 @@
         "documentation": {}
     },
     {
+        "label": "TaskForm",
+        "kind": 6,
+        "importPath": "todoApp.forms",
+        "description": "todoApp.forms",
+        "peekOfCode": "class TaskForm(forms.ModelForm):\n    class Meta:\n        model = Task\n        fields=\"__all__\"",
+        "detail": "todoApp.forms",
+        "documentation": {}
+    },
+    {
         "label": "Task",
         "kind": 6,
         "importPath": "todoApp.models",
@@ -357,7 +390,7 @@
         "kind": 5,
         "importPath": "todoApp.urls",
         "description": "todoApp.urls",
-        "peekOfCode": "urlpatterns = [\n    path('',views.list,name=\"tasks/list\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('',views.list,name=\"list\"),\n    path('tasks/update/<str:pk>/',views.update,name=\"update\"),\n    path('tasks/delete/<str:pk>/',views.delete,name=\"delete\"),\n]",
         "detail": "todoApp.urls",
         "documentation": {}
     },
@@ -366,7 +399,25 @@
         "kind": 2,
         "importPath": "todoApp.views",
         "description": "todoApp.views",
-        "peekOfCode": "def list(request):\n    return render(request,\"tasks/list.html\")",
+        "peekOfCode": "def list(request):\n    tasks=Task.objects.all()\n    form=TaskForm()\n    if request.method==\"POST\":\n        form=TaskForm(request.POST)\n        if form.is_valid():\n            form.save()\n        return redirect (\"/\")\n    context= {'tasks':tasks,'form':form}\n    return render(request,\"tasks/list.html\",context)",
+        "detail": "todoApp.views",
+        "documentation": {}
+    },
+    {
+        "label": "update",
+        "kind": 2,
+        "importPath": "todoApp.views",
+        "description": "todoApp.views",
+        "peekOfCode": "def update(request,pk):\n    tasks=Task.objects.get(id=pk)\n    form=TaskForm(instance=tasks)\n    if request.method==\"POST\":\n        form=TaskForm(request.POST,instance=tasks)\n        if form.is_valid():\n            form.save()\n        return redirect (\"/\")\n    data={\n        'form':form",
+        "detail": "todoApp.views",
+        "documentation": {}
+    },
+    {
+        "label": "delete",
+        "kind": 2,
+        "importPath": "todoApp.views",
+        "description": "todoApp.views",
+        "peekOfCode": "def delete(request, pk):\n    item=Task.objects.get(id=pk)\n    if request.method==\"POST\":\n        item.delete()\n        return redirect('/')\n    data  = {\n    'item':item}\n    return render(request,\"tasks/delete.html\",data)",
         "detail": "todoApp.views",
         "documentation": {}
     },

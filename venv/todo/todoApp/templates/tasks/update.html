@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do App</title>
+    <title>Update Task</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,22 +17,24 @@
         }
 
         form {
-            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        input[type="text"] {
-            padding: 8px;
-            width: 250px;
+        input[type="text"], input[type="submit"] {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
             border-radius: 5px;
             border: 1px solid #ccc;
         }
 
         input[type="submit"] {
-            padding: 8px 20px;
             background-color: #4caf50;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
         }
 
@@ -41,42 +43,24 @@
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
-        .task a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .task a:hover {
-            text-decoration: underline;
-        }
-
-        .completed {
-            text-decoration: line-through;
-            color: #888;
+        .task p {
+            margin: 0;
         }
     </style>
 </head>
 <body>
-    <h3>To Do</h3>
-    <form method="post" action="/">
+    <h3>Update Task</h3>
+    <form method="post" action="">
         {% csrf_token %}
-        {{ form.title }}
-        <input type="submit" name="Create Task">
+        {{ form }}
+        <input type="submit" name="Update Task">
     </form>
-
     {% for task in tasks %}
     <div class="task">
-        <a href="{% url 'update' task.id %}">Update</a>
-        <a href="{% url 'delete' task.id %}">Delete</a>
-
-        {% if task.complete %}
-        <span class="completed">{{ task }}</span>
-        {% else %}
-        <span>{{ task }}</span>
-        {% endif %}
+        <p>{{ task }}</p>
     </div>
     {% endfor %}
 </body>
